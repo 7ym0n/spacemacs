@@ -33,17 +33,19 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(ivy
-     helm
+     better-defaults
+     ranger
      lsp
+     dap
+     helm
      syntax-checking
      (spell-checking :variables spell-checking-enable-by-default nil)
      neotree
      search-engine
      pandoc
      multiple-cursors
-     better-defaults
      emacs-lisp
-
+     graphviz
      (git :variables
           git-magit-status-fullscreen t
           magit-push-always-verify nil
@@ -63,11 +65,19 @@ This function should only modify configuration layer settings."
              python-format-on-save t
              python-fill-column 80
              python-sort-imports-on-save t)
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode)
+
      (go :variables
          go-tab-width 4
          go-format-before-save t
          gofmt-command "goimports"
          go-backend 'lsp)
+     (gtags :disabled-for clojure emacs-lisp javascript latex python shell-scripts)
+     markdown
+     yaml
+     html
+     org
      (javascript :variables javascript-fmt-on-save t)
      (json :variables
            json-fmt-on-save t)
@@ -171,7 +181,7 @@ It should only modify the values of Spacemacs settings."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'vim
+   dotspacemacs-editing-style 'hybrid
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -378,7 +388,7 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers 'relative
 
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
