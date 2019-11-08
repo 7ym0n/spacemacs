@@ -32,8 +32,8 @@ Sync my spacemacs development environment configuration information
 ``SPC a /` 搜索引擎
 ```shell
 ## https://github.com/emacs-lsp/dap-mode#python
-pip install "ptvsd>=4.2"
 ## python env
+pip install "ptvsd>=4.2"
 pip install --upgrade "jedi>=0.13.0" "json-rpc>=1.8.1" "service_factory>=0.1.5"
 pip install pyls-isort
 pip install flake8

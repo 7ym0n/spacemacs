@@ -126,7 +126,8 @@ install_base_pkg() {
     if is_os "ubuntu|debian";then
         apt-get install aspell silversearcher-ag gcc g++ gcc-dev g++-dev \
                 clang clang-dev cmake automake autoconf libc-dev libxml2 \
-                libxml2-dev python3 python3-dev golang
+                libxml2-dev python3 python3-dev golang ctags \
+                exuberant-ctags python-pygments
         info "installed base software."
     else
         crit "not install base software"
@@ -134,4 +135,9 @@ install_base_pkg() {
 
 }
 
-
+install_base_pkg
+install_pyenv_tools
+install_npmenv_tools
+install_goenv
+install_ccenv
+exit 0
