@@ -235,10 +235,11 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
 
    ;; Default font or prioritized list of fonts.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 10.0
+   dotspacemacs-default-font '("Ubuntu Mono"
+                               :size 16
                                :weight normal
-                               :width normal)
+                               :width normal
+                               :powerline-scale 1.1)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -509,14 +510,21 @@ before packages are loaded."
    ;;'(helm-ag-command-option "--all-text")
    '(helm-ag-ignore-buffer-patterns '("\\.svn\\'" "\\.git\\'" "\\venv\\'")))
   ;; Setting Chinese Font
-  (when (and (spacemacs/system-is-mswindows) window-system)
-    (setq ispell-program-name "aspell")
-    (setq w32-pass-alt-to-system nil)
-    (setq w32-apps-modifier 'super)
+  (when (spacemacs/system-is-mswindows)
     (dolist (charset '(kana han symbol cjk-misc bopomofo))
       (set-fontset-font (frame-parameter nil 'font)
                         charset
-                        (font-spec :family "Microsoft Yahei" :size 14))))
+                        (font-spec :family "文泉驿等宽微米黑" :size 16))))
+  ;; 加密文章
+  ;; "http://coldnew.github.io/blog/2013/07/13_5b094.html"
+  (require 'org-crypt)
+  (org-crypt-use-before-save-magic) ;; 保存前自动加密
+  (setq org-crypt-tag-matcher "secret") ;;指定加密的标签
+  (setq org-tags-exclude-from-inheritance (quote ("secret"))) ;;避免重复加密
+  (setq org-crypt-key nil) ;;对称加密
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
+                (sequence "WAITING(w@/!)" "SOMEDAY(S)" "|" "CANCELLED(c@/!)" "MEETING(m)" "PHONE(p)"))))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

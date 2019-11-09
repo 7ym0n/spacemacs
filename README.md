@@ -54,3 +54,10 @@ npm install -g js-beautify
 npm install -g import-js
 npm install -g eslint
 ```
+## Org-mode
+解决中英文等宽对齐的问题，在`Linux`下使用`Source Code Pro`对齐没有遇到问题。
+但是在windows上遇到等宽显示问题，很奇葩，试了多种字体都存在问题，最后找到[解决方案](https://www.callmewing.com/2015/12/08/Spacemacs%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/)。
+使用文泉驿等宽微米黑和`Ubuntu mono`就没有对齐的问题了，特别在书写表格时，有严重的格式对齐的强迫症的用户，这个算完美解决了。
+经过测试，在特别特别长的文字中，会出现错位情况，但是在重新打开时就自动对齐了。当然这种情况肯定建议`M-RET M-RET`自动换行了。
+- [文泉驿等宽微米黑](wqy-microhei-0.2.0-beta.tar.gz)
+- [Ubuntu Mono](Ubuntu-Mono.zip)
