@@ -56,8 +56,7 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-help-tooltip t
                       auto-completion-use-company-box t
-                      auto-completion-private-snippets-directory 
-"~/.emacs.d/private/snippets"
+                      auto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
                       auto-completion-enable-sort-by-usage t)
      (git :variables
           git-magit-status-fullscreen t
