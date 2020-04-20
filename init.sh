@@ -101,6 +101,7 @@ install_pyenv_tools(){
     pip install flake8
     pip install autoflake
     pip install importmagic epc
+    pip install autopep8 pycodestyle pydocstyle pylint rope
     info "installed python develop env."
 }
 
