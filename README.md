@@ -50,9 +50,7 @@ pip install importmagic epc
 
 
 ## Javascript
-npm install -g js-beautify
-npm install -g import-js
-npm install -g eslint
+npm -i -g typescript javascript-typescript-langserver import-js tslint js-beautify prettier
 ```
 ## Org-mode
 解决中英文等宽对齐的问题，在`Linux`下使用`Source Code Pro`对齐没有遇到问题。
