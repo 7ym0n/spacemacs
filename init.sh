@@ -106,9 +106,7 @@ install_pyenv_tools(){
 
 install_npmenv_tools() {
     info "installing javascript web develop tools."
-    npm install -g js-beautify
-    npm install -g import-js
-    npm install -g eslin
+    npm -i -g typescript javascript-typescript-langserver import-js tslint js-beautify prettier
     info "installed javascript web develop tools."
 }
 
