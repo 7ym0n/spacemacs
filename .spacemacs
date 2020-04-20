@@ -1,3 +1,5 @@
+
+
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
@@ -46,7 +48,7 @@ This function should only modify configuration layer settings."
      multiple-cursors
      emacs-lisp
      graphviz
-
+     (ibuffer :variables ibuffer-group-buffers-by 'projects)
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
@@ -56,7 +58,8 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-help-tooltip t
                       auto-completion-use-company-box t
-                      auto-completion-private-snippets-directory "~/.emacs.d/private/snippets"
+                      auto-completion-private-snippets-directory 
+"~/.emacs.d/private/snippets"
                       auto-completion-enable-sort-by-usage t)
      (git :variables
           git-magit-status-fullscreen t
@@ -76,6 +79,13 @@ This function should only modify configuration layer settings."
              python-sort-imports-on-save t)
      (rust :variables rust-backend 'racer)
      (c-c++ :variables
+            c-c++-enable-clang-format-on-save t
+            c-c++-enable-google-style t
+            c-c++-enable-google-newline t
+            c-c++-enable-auto-newline t
+            c-c++-adopt-subprojects t
+            c-c++-backend 'lsp-ccls
+            c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-default-mode-for-headers 'c++-mode)
 
      (go :variables
@@ -85,16 +95,30 @@ This function should only modify configuration layer settings."
          godoc-at-point-function 'godoc-gogetdoc
          go-backend 'lsp)
 
-     (javascript :variables javascript-fmt-on-save t)
+     (javascript :variables
+                 javascript-fmt-tool 'prettier
+                 javascript-import-tool 'import-js
+                 javascript-backend 'tern
+                 js2-basic-offset 2
+                 js-indent-level 2
+                 javascript-repl `nodejs
+                 node-add-modules-path t
+                 js2-include-node-externs t
+                 javascript-fmt-on-save t)
+    (typescript :variables
+             typescript-linter 'tslint
+             typescript-backend 'tide
+             typescript-fmt-on-save t)
      (json :variables
            json-fmt-on-save t)
-     (gtags :disabled-for clojure emacs-lisp javascript latex python shell-scripts)
+     (shell-scripts :variables shell-scripts-backend 'lsp)
+     (gtags :disabled-for clojure emacs-lisp javascript latex python 
+shell-scripts)
      markdown
      yaml
      html
      org
      ipython-notebook
-     (ibuffer :variables ibuffer-group-buffers-by 'projects)
 
      (chinese :variables
               chinese-enable-youdao-dict t)
@@ -242,7 +266,8 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 
+1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -454,7 +479,9 @@ It should only modify the values of Spacemacs settings."
    ;; %F - frame name
    ;; %s - process status
    ;; %p - percent of buffer above top of window, or Top, Bot or All
-   ;; %P - percent of buffer above bottom of window, perhaps plus Top, or Bot or All
+   ;; %P - percent of buffer above bottom of window, perhaps plus Top, or Bot 
+or 
+All
    ;; %m - mode name
    ;; %n - Narrow if appropriate
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
@@ -538,7 +565,8 @@ before packages are loaded."
   (setq org-crypt-key nil) ;;对称加密
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
-                (sequence "WAITING(w@/!)" "SOMEDAY(S)" "|" "CANCELLED(c@/!)" "MEETING(m)" "PHONE(p)"))))
+                (sequence "WAITING(w@/!)" "SOMEDAY(S)" "|" "CANCELLED(c@/!)" 
+"MEETING(m)" "PHONE(p)"))))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -557,7 +585,36 @@ This function is called at the very end of Spacemacs initialization."
  '(helm-ag-ignore-buffer-patterns (quote ("\\.svn\\'" "\\.git\\'" "\\venv\\'")))
  '(package-selected-packages
    (quote
-    (web-beautify tern prettier-js nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd helm helm-core add-node-modules-path lsp-ui lsp-treemacs company-lsp godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc flycheck-golangci-lint company-go go-mode yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui tree-mode lsp-mode markdown-mode dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda company blacken anaconda-mode pythonic lv ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+    (web-beautify tern prettier-js nodejs-repl livid-mode skewer-mode 
+js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode 
+htmlize simple-httpd helm helm-core add-node-modules-path lsp-ui lsp-treemacs 
+company-lsp godoctor go-tag go-rename go-impl go-guru go-gen-test 
+go-fill-struct 
+go-eldoc flycheck-golangci-lint company-go go-mode yapfify stickyfunc-enhance 
+pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms 
+live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags 
+helm-cscope xcscope ggtags dap-mode bui tree-mode lsp-mode markdown-mode 
+dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda 
+company blacken anaconda-mode pythonic lv ws-butler writeroom-mode winum 
+which-key volatile-highlights vi-tilde-fringe uuidgen use-package 
+treemacs-projectile toc-org symon symbol-overlay string-inflection 
+spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin 
+persp-mode pcre2el password-generator paradox overseer org-plus-contrib 
+org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint 
+indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses 
+highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop 
+helm-purpose helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx 
+helm-descbinds helm-ag google-translate golden-ratio font-lock+ 
+flycheck-package 
+flx-ido fill-column-indicator fancy-battery eyebrowse expand-region 
+evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor 
+evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc 
+evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state 
+evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args 
+evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode 
+doom-modeline diminish devdocs define-word column-enforce-mode 
+clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile 
+aggressive-indent ace-link ace-jump-helm-line)))
  '(yas-snippet-dirs
    (quote
     ("~/.emacs.d/private/snippets/" yasnippet-snippets-dir))))
