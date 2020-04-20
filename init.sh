@@ -97,7 +97,7 @@ install_pyenv_tools(){
     info "installing python develop env."
     pip install "ptvsd>=4.2"
     pip install --upgrade "jedi>=0.13.0" "json-rpc>=1.8.1" "service_factory>=0.1.5"
-    pip install pyls-isort
+    pip install pyls-isort pyls-mypy pyls-black pyflakes mccabe yapf
     pip install flake8
     pip install autoflake
     pip install importmagic epc
