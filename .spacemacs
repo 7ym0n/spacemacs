@@ -47,11 +47,10 @@ This function should only modify configuration layer settings."
      emacs-lisp
      graphviz
      (ibuffer :variables ibuffer-group-buffers-by 'projects)
+
      (auto-completion :variables
                       auto-completion-return-key-behavior 'complete
                       auto-completion-tab-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence nil
-                      auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-idle-delay 0.2
                       auto-completion-enable-snippets-in-popup t
                       auto-completion-enable-help-tooltip t
@@ -68,7 +67,8 @@ This function should only modify configuration layer settings."
 
      (java :variables java-backend 'meghanada)
      (python :variables
-             python-backend 'anaconda
+             python-backend 'lsp
+             python-lsp-server 'mspyls
              python-test-runner '(pytest nose)
              python-formatter 'yapf
              python-format-on-save t
@@ -76,13 +76,6 @@ This function should only modify configuration layer settings."
              python-sort-imports-on-save t)
      (rust :variables rust-backend 'racer)
      (c-c++ :variables
-            c-c++-enable-clang-format-on-save t
-            c-c++-enable-google-style t
-            c-c++-enable-google-newline t
-            c-c++-enable-auto-newline t
-            c-c++-adopt-subprojects t
-            c-c++-backend 'lsp-ccls
-            c-c++-lsp-enable-semantic-highlight 'rainbow
             c-c++-default-mode-for-headers 'c++-mode)
 
      (go :variables
@@ -93,28 +86,30 @@ This function should only modify configuration layer settings."
          go-backend 'lsp)
 
      (javascript :variables
-                 javascript-fmt-tool 'prettier
                  javascript-import-tool 'import-js
-                 javascript-backend 'tern
                  js2-basic-offset 2
-                 js-indent-level 2
                  javascript-repl `nodejs
                  node-add-modules-path t
                  js2-include-node-externs t
-                 javascript-fmt-on-save t)
-    (typescript :variables
-             typescript-linter 'tslint
-             typescript-backend 'tide
-             typescript-fmt-on-save t)
+                 javascript-backend 'tern
+                 javascript-lsp-linter nil
+                 javascript-fmt-tool 'prettier
+                 javascript-fmt-on-save t
+                 )
+     (typescript :variables
+                 typescript-fmt-on-save t
+                 typescript-linter 'tslint
+                 typescript-backend 'lsp
+                 typescript-lsp-linter nil)
      (json :variables
            json-fmt-on-save t)
-     (shell-scripts :variables shell-scripts-backend 'lsp)
-     (gtags :disabled-for clojure emacs-lisp javascript latex python 
-shell-scripts)
+     (gtags :disabled-for clojure emacs-lisp javascript latex python shell-scripts)
      markdown
      yaml
      html
-     org
+     (org :variables
+          org-projectile-file "TODOs.org"
+          org-enable-hugo-support t)
      ipython-notebook
 
      (chinese :variables
@@ -550,6 +545,9 @@ before packages are loaded."
       (set-fontset-font (frame-parameter nil 'font)
                         charset
                         (font-spec :family "文泉驿等宽微米黑" :size 16))))
+  ;; make-header, add file header
+  ;; https://github.com/emacsmirror/emacswiki.org/edit/master/header2.el
+  (use-package header2 :load-path "~/.emacs.d/private/local")
   ;; 加密文章
   ;; "http://coldnew.github.io/blog/2013/07/13_5b094.html"
   (require 'org-crypt)
@@ -559,8 +557,7 @@ before packages are loaded."
   (setq org-crypt-key nil) ;;对称加密
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d!/!)")
-                (sequence "WAITING(w@/!)" "SOMEDAY(S)" "|" "CANCELLED(c@/!)" 
-"MEETING(m)" "PHONE(p)"))))
+                (sequence "WAITING(w@/!)" "SOMEDAY(S)" "|" "CANCELLED(c@/!)" "MEETING(m)" "PHONE(p)"))))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -577,38 +574,10 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(helm-ag-base-command "ag --vimgrep --nocolor --nogroup --ignore-case")
  '(helm-ag-ignore-buffer-patterns (quote ("\\.svn\\'" "\\.git\\'" "\\venv\\'")))
+ '(org-agenda-files nil)
  '(package-selected-packages
    (quote
-    (web-beautify tern prettier-js nodejs-repl livid-mode skewer-mode 
-js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode 
-htmlize simple-httpd helm helm-core add-node-modules-path lsp-ui lsp-treemacs 
-company-lsp godoctor go-tag go-rename go-impl go-guru go-gen-test 
-go-fill-struct 
-go-eldoc flycheck-golangci-lint company-go go-mode yapfify stickyfunc-enhance 
-pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms 
-live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags 
-helm-cscope xcscope ggtags dap-mode bui tree-mode lsp-mode markdown-mode 
-dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda 
-company blacken anaconda-mode pythonic lv ws-butler writeroom-mode winum 
-which-key volatile-highlights vi-tilde-fringe uuidgen use-package 
-treemacs-projectile toc-org symon symbol-overlay string-inflection 
-spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin 
-persp-mode pcre2el password-generator paradox overseer org-plus-contrib 
-org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint 
-indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses 
-highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop 
-helm-purpose helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx 
-helm-descbinds helm-ag google-translate golden-ratio font-lock+ 
-flycheck-package 
-flx-ido fill-column-indicator fancy-battery eyebrowse expand-region 
-evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor 
-evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc 
-evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state 
-evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args 
-evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode 
-doom-modeline diminish devdocs define-word column-enforce-mode 
-clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile 
-aggressive-indent ace-link ace-jump-helm-line)))
+    (tide typescript-mode web-beautify tern prettier-js nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd helm helm-core add-node-modules-path lsp-ui lsp-treemacs company-lsp godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc flycheck-golangci-lint company-go go-mode yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui tree-mode lsp-mode markdown-mode dash-functional cython-mode counsel-gtags counsel swiper ivy company-anaconda company blacken anaconda-mode pythonic lv ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin persp-mode pcre2el password-generator paradox overseer org-plus-contrib org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
  '(yas-snippet-dirs
    (quote
     ("~/.emacs.d/private/snippets/" yasnippet-snippets-dir))))
